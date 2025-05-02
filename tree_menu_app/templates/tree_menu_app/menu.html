@@ -1,0 +1,12 @@
+{% if menu %}
+<div class="menu">
+    <div class="menu-title">{{ menu.name }}</div>
+    <ul class="menu-items">
+        {% for item in items %}
+            {% if not item.parent %}
+                {% include "tree_menu_app/menu_item.html" %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

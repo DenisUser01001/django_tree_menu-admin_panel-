@@ -1,0 +1,14 @@
+{% extends "tree_menu_app/base.html" %}
+{% load tree_menu_tags %}
+
+{% block content %}
+    {% for menu in menus %}
+        {% draw_menu menu.slug %}
+
+    {% endfor %}
+
+    {% if current_item %}
+        <h2>{{ current_item.name }}</h2>
+        <p>Это страница пункта меню "{{ current_item.name }}"</p>
+    {% endif %}
+{% endblock %}

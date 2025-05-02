@@ -1,0 +1,12 @@
+<li class="menu-item {% if item == active_item %}active{% endif %}">
+    <a href="{% if item.named_url %}{% url item.named_url %}{% else %}{{ item.url }}{% endif %}">
+        {{ item.name }}
+    </a>
+    {% if item.id in expanded_items or item == active_item %}
+        <ul>
+            {% for child in item.children.all %}
+                {% include "tree_menu_app/menu_item.html" with item=child %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>
