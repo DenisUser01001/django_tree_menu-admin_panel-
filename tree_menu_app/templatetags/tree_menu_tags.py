@@ -1,16 +1,13 @@
-# tree_menu_app/templatetags/tree_menu_tags.py
 from django import template
-from django.urls import reverse, resolve
-from tree_menu_app.models import Menu, MenuItem
+from django.urls import reverse
+from tree_menu_app.models import Menu
 
 register = template.Library()
-
 
 @register.inclusion_tag('tree_menu_app/menu.html', takes_context=True)
 def draw_menu(context, menu_slug):
     request = context['request']
     current_url = request.path.rstrip('/')
-    current_item = context.get('current_item')
 
     try:
         menu = Menu.objects.prefetch_related('items').get(slug=menu_slug)
@@ -21,12 +18,11 @@ def draw_menu(context, menu_slug):
     active_item = None
     expanded_items = set()
 
-    # Find active item and its ancestors
     for item in items:
-        if item.url and item.url == current_url:
+        if item.url and item.url.rstrip('/') == current_url:
             active_item = item
             break
-        elif item.named_url:
+        if item.named_url:
             try:
                 if reverse(item.named_url) == current_url:
                     active_item = item
@@ -35,7 +31,6 @@ def draw_menu(context, menu_slug):
                 continue
 
     if active_item:
-        # Add all ancestors of active item
         parent = active_item.parent
         while parent:
             expanded_items.add(parent.id)

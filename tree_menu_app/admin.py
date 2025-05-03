@@ -34,7 +34,16 @@ class MenuAdmin(admin.ModelAdmin):
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'menu', 'url', 'named_url', 'parent', 'level')
     list_filter = ('menu',)
+    readonly_fields = ('preview_url',)
+    fields = ('menu', 'name', 'parent', 'url', 'named_url', 'preview_url')
     search_fields = ('name', 'url', 'named_url')
+
+    def preview_url(self, obj):
+        if obj.pk:  # Для существующих объектов
+            return f"Будет: <code>{obj.generate_url()}</code>"
+        return "Сохраните объект, чтобы увидеть URL"
+
+    preview_url.short_description = "Пример URL"
 
     def level(self, obj):
         return obj.get_level()

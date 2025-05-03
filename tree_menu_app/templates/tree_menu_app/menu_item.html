@@ -3,9 +3,11 @@
         {{ item.name }}
     </a>
     {% if item.id in expanded_items or item == active_item %}
-        <ul>
-            {% for child in item.children.all %}
-                {% include "tree_menu_app/menu_item.html" with item=child %}
+        <ul class="submenu">
+            {% for child in items %}
+                {% if child.parent == item %}
+                    {% include "tree_menu_app/menu_item.html" with item=child %}
+                {% endif %}
             {% endfor %}
         </ul>
     {% endif %}

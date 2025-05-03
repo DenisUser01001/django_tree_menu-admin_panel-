@@ -32,40 +32,79 @@ class MenuItem(models.Model):
         ordering = ['id']
 
     def clean(self):
+        # Проверка взаимоисключения полей
         if self.url and self.named_url:
             raise ValidationError("Можно задать либо URL, либо Named URL, одновременное задание обоих невозможно.")
 
+        # Автогенерация URL если оба поля пусты
         if not self.url and not self.named_url:
-            # Авто генерация URL исходя из иерархии меню
-            if self.parent:
-                self.url = f"{self.parent.url}/{slugify(self.name)}"
-            else:
-                self.url = f"/{slugify(self.name)}"
-        elif self.named_url:
+            self.url = self.generate_url()
+
+        # Валидация named_url
+        if self.named_url:
             try:
-                # Валидация named URL
                 reverse(self.named_url)
             except NoReverseMatch:
-                raise ValidationError(f" Такой Named URL '{self.named_url}' не существует в urls.py")
-        elif self.url:
-            # Валидация формата URL
-            parsed = urlparse(self.url)
-            if not (parsed.scheme == '' and parsed.netloc == '' and parsed.path.startswith('/')):
-                raise ValidationError("URL должен начинаться с символа '/'")
+                raise ValidationError(f"Named URL '{self.named_url}' не существует в urls.py")
 
-            # Валидация иерархии
-            if self.parent and not self.url.startswith(self.parent.url):
+        # Полная валидация ручного URL
+        if self.url:
+            # Проверка формата (слеши)
+            if not (self.url.startswith('/') and self.url.endswith('/')):
+                raise ValidationError("URL должен начинаться и заканчиваться слешем (/).")
+
+            # Проверка на повторяющиеся слеши
+            if '//' in self.url:
+                raise ValidationError("URL не должен содержать повторяющихся слешей (//).")
+
+            # Проверка принадлежности к меню
+            required_menu_prefix = f"/{slugify(self.menu.slug)}/"
+            if not self.url.startswith(required_menu_prefix):
                 raise ValidationError(
-                    f"URL должен начинаться с родительского пути URL'{self.parent.url}'. "
-                    f"Рекомендуемый URL: '{self.parent.url}/{slugify(self.name)}'"
+                    f"URL должен начинаться с '/{slugify(self.menu.slug)}/'. "
+                    f"Текущий URL: '{self.url}'"
                 )
 
+            # Проверка уровня вложенности на основе свойства level
+            url_depth = self.url.strip('/').count('/')  # Глубина URL
+            expected_depth = self.level + 1  # Ожидаемая глубина
+
+            if url_depth != expected_depth:
+                raise ValidationError(
+                    f"Некорректная глубина URL. Уровень элемента: {self.level}\n"
+                    f"Ожидается {expected_depth} сегмента(ов) после '/{self.menu.slug}/', "
+                    f"получено {url_depth}.\n"
+                )
+
+            # Проверка соответствия родительскому URL (для вложенных элементов)
+            if self.parent and not self.url.startswith(self.parent.url.rstrip('/') + '/'):
+                raise ValidationError(
+                    f"URL должен начинаться с родительского пути '{self.parent.url}'\n"
+                    f"Ожидается: '{self.parent.url.rstrip('/')}/{slugify(self.name)}/'"
+                )
+
+
+    def generate_url(self):
+        """Генерирует URL с гарантией слешей в начале и конце"""
+        path = slugify(self.name)
+        if self.parent:
+            parent_path = self.parent.url.rstrip('/')
+            return f"{parent_path}/{path}/"
+        return f"/{slugify(self.menu.slug)}/{path}/"
+
+
     def save(self, *args, **kwargs):
-        self.full_clean()
+        if not self.url and not self.named_url:
+            self.url = self.generate_url()
         super().save(*args, **kwargs)
 
-    def __str__(self):
+    def get_full_path(self):
+        if self.parent:
+            return f"{self.parent.get_full_path()} > {self.name}"
         return self.name
+
+    def __str__(self):
+        return self.get_full_path()
 
     @property
     def level(self):
@@ -78,3 +117,5 @@ class MenuItem(models.Model):
             level += 1
             item = item.parent
         return level
+
+
