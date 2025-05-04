@@ -4,7 +4,7 @@
     <ul class="menu-items">
         {% for item in items %}
             {% if not item.parent %}
-                {% include "tree_menu_app/menu_item.html" %}
+                {% include "tree_menu_app/menu_item.html" with item=item items=items active_item=active_item expanded_items=expanded_items %}
             {% endif %}
         {% endfor %}
     </ul>

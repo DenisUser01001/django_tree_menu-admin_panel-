@@ -6,7 +6,7 @@
         <ul class="submenu">
             {% for child in items %}
                 {% if child.parent == item %}
-                    {% include "tree_menu_app/menu_item.html" with item=child %}
+                    {% include "tree_menu_app/menu_item.html" with item=child items=items active_item=active_item expanded_items=expanded_items %}
                 {% endif %}
             {% endfor %}
         </ul>

@@ -32,6 +32,14 @@ class MenuItem(models.Model):
         ordering = ['id']
 
     def clean(self):
+        # Добавляем проверку на пустой slug
+        if not slugify(self.name, allow_unicode=True):
+            raise ValidationError("Название должно содержать буквы или цифры")
+
+        # Запрещаем создание вложенных элементов для нового меню
+        if self.parent and self.parent.menu_id and not Menu.objects.filter(pk=self.parent.menu_id).exists():
+            raise ValidationError("Нельзя создавать вложенные элементы для несохраненного меню. Сначала сохраните меню.")
+
         # Проверка взаимоисключения полей
         if self.url and self.named_url:
             raise ValidationError("Можно задать либо URL, либо Named URL, одновременное задание обоих невозможно.")
@@ -49,6 +57,10 @@ class MenuItem(models.Model):
 
         # Полная валидация ручного URL
         if self.url:
+            # Проверка, что меню уже создано, имеет свой слаг, который будет использоваться для генерации URL
+            if not self.menu_id:
+                raise ValidationError("Сначала сохраните меню перед добавлением пунктов для дальнейшей создания URL элементов")
+
             # Проверка формата (слеши)
             if not (self.url.startswith('/') and self.url.endswith('/')):
                 raise ValidationError("URL должен начинаться и заканчиваться слешем (/).")
@@ -84,13 +96,34 @@ class MenuItem(models.Model):
                 )
 
 
+    # def generate_url(self):
+    #     """Генерирует URL с гарантией слешей в начале и конце"""
+    #     path = slugify(self.name)
+    #     if self.parent:
+    #         parent_path = self.parent.url.rstrip('/')
+    #         return f"{parent_path}/{path}/"
+    #     return f"/{slugify(self.menu.slug)}/{path}/"
+
+    # def generate_url(self):
+    #     # Добавляем параметр allow_unicode=True для поддержки кириллицы
+    #     path = slugify(self.name, allow_unicode=True) or 'item'
+    #     if self.parent:
+    #         return f"{self.parent.url.rstrip('/')}/{path}/"
+    #     return f"/{slugify(self.menu.slug, allow_unicode=True)}/{path}/"
+
     def generate_url(self):
-        """Генерирует URL с гарантией слешей в начале и конце"""
-        path = slugify(self.name)
+        # Генерация slug для пункта меню
+        item_slug = slugify(self.name)
+        if not item_slug:  # Если slugify вернул пустую строку (для русских символов без allow_unicode)
+            item_slug = f"item-{self.pk}" if self.pk else "item"
+
+        # Генерация slug для меню (если меню существует)
+        menu_slug = slugify(self.menu.name) if hasattr(self, 'menu') and self.menu else "menu"
+
         if self.parent:
-            parent_path = self.parent.url.rstrip('/')
-            return f"{parent_path}/{path}/"
-        return f"/{slugify(self.menu.slug)}/{path}/"
+            parent_url = self.parent.url.rstrip('/')
+            return f"{parent_url}/{item_slug}/"
+        return f"/{menu_slug}/{item_slug}/"
 
 
     def save(self, *args, **kwargs):
@@ -98,13 +131,26 @@ class MenuItem(models.Model):
             self.url = self.generate_url()
         super().save(*args, **kwargs)
 
+
     def get_full_path(self):
-        if self.parent:
-            return f"{self.parent.get_full_path()} > {self.name}"
-        return self.name
+        path_parts = []
+        item = self
+
+        # Собираем все родительские элементы
+        while item:
+            path_parts.append(item.name)
+            item = item.parent
+
+        # Разворачиваем порядок (от корня к текущему элементу)
+        path_parts.reverse()
+
+        # Добавляем название меню в начало
+        menu_name = self.menu.name if hasattr(self, 'menu') else ''
+        return f"{menu_name}: {' > '.join(path_parts)}"
 
     def __str__(self):
         return self.get_full_path()
+
 
     @property
     def level(self):

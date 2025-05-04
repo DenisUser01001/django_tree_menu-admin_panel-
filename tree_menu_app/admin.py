@@ -8,11 +8,10 @@ class MenuItemInline(admin.TabularInline):
     fields = ('name', 'url', 'named_url', 'parent')
     show_change_link = True
 
-
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
-    # readonly_fields = ('slug',)
+
 
     inlines = [MenuItemInline]
 

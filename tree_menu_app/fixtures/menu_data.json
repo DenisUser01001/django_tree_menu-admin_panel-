@@ -3,44 +3,17 @@
     "model": "tree_menu_app.menu",
     "pk": 1,
     "fields": {
+      "name": "Культура",
+      "slug": "culture"
+    }
+  },
+  {
+    "model": "tree_menu_app.menuitem",
+    "pk": 2,
+    "fields": {
+      "menu": 1,
       "name": "Поэты",
-      "slug": "poets"
-    }
-  },
-  {
-    "model": "tree_menu_app.menu",
-    "pk": 2,
-    "fields": {
-      "name": "Писатели",
-      "slug": "writers"
-    }
-  },
-  {
-    "model": "tree_menu_app.menu",
-    "pk": 3,
-    "fields": {
-      "name": "Художники",
-      "slug": "artists"
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 1,
-    "fields": {
-      "menu": 1,
-      "name": "17 век",
-      "url": "/poets/17-century",
-      "named_url": "",
-      "parent": null
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 2,
-    "fields": {
-      "menu": 1,
-      "name": "18 век",
-      "url": "/poets/18-century",
+      "url": "/culture/poets/",
       "named_url": "",
       "parent": null
     }
@@ -50,30 +23,30 @@
     "pk": 3,
     "fields": {
       "menu": 1,
-      "name": "19 век",
-      "url": "/poets/19-century",
+      "name": "Александр Пушкин",
+      "url": "/culture/poets/pushkin/",
       "named_url": "",
-      "parent": null
+      "parent": 2
     }
   },
   {
     "model": "tree_menu_app.menuitem",
     "pk": 4,
     "fields": {
-      "menu": 2,
-      "name": "17 век",
-      "url": "/writers/17-century",
+      "menu": 1,
+      "name": "Михаил Лермонтов",
+      "url": "/culture/poets/lermontov/",
       "named_url": "",
-      "parent": null
+      "parent": 2
     }
   },
   {
     "model": "tree_menu_app.menuitem",
     "pk": 5,
     "fields": {
-      "menu": 2,
-      "name": "18 век",
-      "url": "/writers/18-century",
+      "menu": 1,
+      "name": "Писатели",
+      "url": "/culture/writers/",
       "named_url": "",
       "parent": null
     }
@@ -82,31 +55,31 @@
     "model": "tree_menu_app.menuitem",
     "pk": 6,
     "fields": {
-      "menu": 2,
-      "name": "19 век",
-      "url": "/writers/19-century",
+      "menu": 1,
+      "name": "Лев Толстой",
+      "url": "/culture/writers/tolstoy/",
       "named_url": "",
-      "parent": null
+      "parent": 5
     }
   },
   {
     "model": "tree_menu_app.menuitem",
     "pk": 7,
     "fields": {
-      "menu": 3,
-      "name": "17 век",
-      "url": "/artists/17-century",
+      "menu": 1,
+      "name": "Фёдор Достоевский",
+      "url": "/culture/writers/dostoevsky/",
       "named_url": "",
-      "parent": null
+      "parent": 5
     }
   },
   {
     "model": "tree_menu_app.menuitem",
     "pk": 8,
     "fields": {
-      "menu": 3,
-      "name": "18 век",
-      "url": "/artists/18-century",
+      "menu": 1,
+      "name": "Художники",
+      "url": "/culture/artists/",
       "named_url": "",
       "parent": null
     }
@@ -115,11 +88,11 @@
     "model": "tree_menu_app.menuitem",
     "pk": 9,
     "fields": {
-      "menu": 3,
-      "name": "19 век",
-      "url": "/artists/19-century",
+      "menu": 1,
+      "name": "Иван Айвазовский",
+      "url": "/culture/artists/aivazovsky/",
       "named_url": "",
-      "parent": null
+      "parent": 8
     }
   },
   {
@@ -127,494 +100,10 @@
     "pk": 10,
     "fields": {
       "menu": 1,
-      "name": "Джон Донн",
-      "url": "/poets/17-century/john-donne",
-      "named_url": "",
-      "parent": 1
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 11,
-    "fields": {
-      "menu": 1,
-      "name": "Уильям Шекспир",
-      "url": "/poets/17-century/william-shakespeare",
-      "named_url": "",
-      "parent": 1
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 12,
-    "fields": {
-      "menu": 1,
-      "name": "Джон Мильтон",
-      "url": "/poets/17-century/john-milton",
-      "named_url": "",
-      "parent": 1
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 13,
-    "fields": {
-      "menu": 1,
-      "name": "Роберт Херрик",
-      "url": "/poets/17-century/robert-herrick",
-      "named_url": "",
-      "parent": 1
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 14,
-    "fields": {
-      "menu": 1,
-      "name": "Эндрю Марвелл",
-      "url": "/poets/17-century/andrew-marvell",
-      "named_url": "",
-      "parent": 1
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 15,
-    "fields": {
-      "menu": 1,
-      "name": "Александр Поуп",
-      "url": "/poets/18-century/alexander-pope",
-      "named_url": "",
-      "parent": 2
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 16,
-    "fields": {
-      "menu": 1,
-      "name": "Уильям Блейк",
-      "url": "/poets/18-century/william-blake",
-      "named_url": "",
-      "parent": 2
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 17,
-    "fields": {
-      "menu": 1,
-      "name": "Роберт Бёрнс",
-      "url": "/poets/18-century/robert-burns",
-      "named_url": "",
-      "parent": 2
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 18,
-    "fields": {
-      "menu": 1,
-      "name": "Томас Грей",
-      "url": "/poets/18-century/thomas-gray",
-      "named_url": "",
-      "parent": 2
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 19,
-    "fields": {
-      "menu": 1,
-      "name": "Уильям Вордсворт",
-      "url": "/poets/18-century/william-wordsworth",
-      "named_url": "",
-      "parent": 2
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 20,
-    "fields": {
-      "menu": 1,
-      "name": "Александр Пушкин",
-      "url": "/poets/19-century/alexander-pushkin",
-      "named_url": "",
-      "parent": 3
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 21,
-    "fields": {
-      "menu": 1,
-      "name": "Михаил Лермонтов",
-      "url": "/poets/19-century/mikhail-lermontov",
-      "named_url": "",
-      "parent": 3
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 22,
-    "fields": {
-      "menu": 1,
-      "name": "Джон Китс",
-      "url": "/poets/19-century/john-keats",
-      "named_url": "",
-      "parent": 3
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 23,
-    "fields": {
-      "menu": 1,
-      "name": "Уолт Уитмен",
-      "url": "/poets/19-century/walt-whitman",
-      "named_url": "",
-      "parent": 3
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 24,
-    "fields": {
-      "menu": 1,
-      "name": "Шарль Бодлер",
-      "url": "/poets/19-century/charles-baudelaire",
-      "named_url": "",
-      "parent": 3
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 25,
-    "fields": {
-      "menu": 2,
-      "name": "Мигель де Сервантес",
-      "url": "/writers/17-century/miguel-de-cervantes",
-      "named_url": "",
-      "parent": 4
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 26,
-    "fields": {
-      "menu": 2,
-      "name": "Джон Баньян",
-      "url": "/writers/17-century/john-bunyan",
-      "named_url": "",
-      "parent": 4
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 27,
-    "fields": {
-      "menu": 2,
-      "name": "Мадам де Лафайет",
-      "url": "/writers/17-century/madame-de-la-fayette",
-      "named_url": "",
-      "parent": 4
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 28,
-    "fields": {
-      "menu": 2,
-      "name": "Джон Драйден",
-      "url": "/writers/17-century/john-dryden",
-      "named_url": "",
-      "parent": 4
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 29,
-    "fields": {
-      "menu": 2,
-      "name": "Даниель Дефо",
-      "url": "/writers/17-century/daniel-defoe",
-      "named_url": "",
-      "parent": 4
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 30,
-    "fields": {
-      "menu": 2,
-      "name": "Джонатан Свифт",
-      "url": "/writers/18-century/jonathan-swift",
-      "named_url": "",
-      "parent": 5
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 31,
-    "fields": {
-      "menu": 2,
-      "name": "Генри Филдинг",
-      "url": "/writers/18-century/henry-fielding",
-      "named_url": "",
-      "parent": 5
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 32,
-    "fields": {
-      "menu": 2,
-      "name": "Джейн Остин",
-      "url": "/writers/18-century/jane-austen",
-      "named_url": "",
-      "parent": 5
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 33,
-    "fields": {
-      "menu": 2,
-      "name": "Вольтер",
-      "url": "/writers/18-century/voltaire",
-      "named_url": "",
-      "parent": 5
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 34,
-    "fields": {
-      "menu": 2,
-      "name": "Дени Дидро",
-      "url": "/writers/18-century/denis-diderot",
-      "named_url": "",
-      "parent": 5
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 35,
-    "fields": {
-      "menu": 2,
-      "name": "Лев Толстой",
-      "url": "/writers/19-century/leo-tolstoy",
-      "named_url": "",
-      "parent": 6
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 36,
-    "fields": {
-      "menu": 2,
-      "name": "Фёдор Достоевский",
-      "url": "/writers/19-century/fyodor-dostoevsky",
-      "named_url": "",
-      "parent": 6
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 37,
-    "fields": {
-      "menu": 2,
-      "name": "Чарльз Диккенс",
-      "url": "/writers/19-century/charles-dickens",
-      "named_url": "",
-      "parent": 6
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 38,
-    "fields": {
-      "menu": 2,
-      "name": "Виктор Гюго",
-      "url": "/writers/19-century/victor-hugo",
-      "named_url": "",
-      "parent": 6
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 39,
-    "fields": {
-      "menu": 2,
-      "name": "Марк Твен",
-      "url": "/writers/19-century/mark-twain",
-      "named_url": "",
-      "parent": 6
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 40,
-    "fields": {
-      "menu": 3,
-      "name": "Рембрандт",
-      "url": "/artists/17-century/rembrandt",
-      "named_url": "",
-      "parent": 7
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 41,
-    "fields": {
-      "menu": 3,
-      "name": "Диего Веласкес",
-      "url": "/artists/17-century/diego-velazquez",
-      "named_url": "",
-      "parent": 7
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 42,
-    "fields": {
-      "menu": 3,
-      "name": "Питер Пауль Рубенс",
-      "url": "/artists/17-century/peter-paul-rubens",
-      "named_url": "",
-      "parent": 7
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 43,
-    "fields": {
-      "menu": 3,
-      "name": "Ян Вермеер",
-      "url": "/artists/17-century/jan-vermeer",
-      "named_url": "",
-      "parent": 7
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 44,
-    "fields": {
-      "menu": 3,
-      "name": "Караваджо",
-      "url": "/artists/17-century/caravaggio",
-      "named_url": "",
-      "parent": 7
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 45,
-    "fields": {
-      "menu": 3,
-      "name": "Франсиско Гойя",
-      "url": "/artists/18-century/francisco-goya",
+      "name": "Илья Репин",
+      "url": "/culture/artists/repin/",
       "named_url": "",
       "parent": 8
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 46,
-    "fields": {
-      "menu": 3,
-      "name": "Уильям Хогарт",
-      "url": "/artists/18-century/william-hogarth",
-      "named_url": "",
-      "parent": 8
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 47,
-    "fields": {
-      "menu": 3,
-      "name": "Жан-Оноре Фрагонар",
-      "url": "/artists/18-century/jean-honore-fragonard",
-      "named_url": "",
-      "parent": 8
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 48,
-    "fields": {
-      "menu": 3,
-      "name": "Томас Гейнсборо",
-      "url": "/artists/18-century/thomas-gainsborough",
-      "named_url": "",
-      "parent": 8
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 49,
-    "fields": {
-      "menu": 3,
-      "name": "Джошуа Рейнольдс",
-      "url": "/artists/18-century/joshua-reynolds",
-      "named_url": "",
-      "parent": 8
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 50,
-    "fields": {
-      "menu": 3,
-      "name": "Винсент ван Гог",
-      "url": "/artists/19-century/vincent-van-gogh",
-      "named_url": "",
-      "parent": 9
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 51,
-    "fields": {
-      "menu": 3,
-      "name": "Клод Моне",
-      "url": "/artists/19-century/claude-monet",
-      "named_url": "",
-      "parent": 9
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 52,
-    "fields": {
-      "menu": 3,
-      "name": "Поль Сезанн",
-      "url": "/artists/19-century/paul-cezanne",
-      "named_url": "",
-      "parent": 9
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 53,
-    "fields": {
-      "menu": 3,
-      "name": "Эдгар Дега",
-      "url": "/artists/19-century/edgar-degas",
-      "named_url": "",
-      "parent": 9
-    }
-  },
-  {
-    "model": "tree_menu_app.menuitem",
-    "pk": 54,
-    "fields": {
-      "menu": 3,
-      "name": "Иван Айвазовский",
-      "url": "/artists/19-century/ivan-aivazovsky",
-      "named_url": "",
-      "parent": 9
     }
   }
 ]
